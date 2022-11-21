@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/8efc22d7af.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/8efc22d7af.js" crossorigin="anonymous"></script>
   <link rel="icon" type="image/x-icon" href="images/favicon.png">
   <title>Personal Music</title>
   <style>
@@ -47,31 +47,60 @@
       text-align: center;
     }
 
-    .gallery-container {
+    .btn-container {
+      margin-left: auto;
+      margin-right: auto;
+      width: 70%;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+
     }
 
-    .about-photos-top-container {
-      margin: 15px;
+    .menu-btn {
+      width: 300px;
+      text-align: center;
+      margin: 15px 15px;
+    }
+
+
+
+    .btn-pic {
+      width: 250px;
+      height: 250px;
+      cursor: pointer;
+    }
+
+    .btn-pic:hover {
+      opacity: .5;
+      transition: linear, .3s;
+      box-shadow:
+        inset 0 0 50px #fff,
+        /* inner white */
+        inset 20px 0 60px rgb(251, 255, 0),
+        /* inner left magenta short */
+        inset -20px 0 60px #0ff,
+        /* inner right cyan short */
+        inset 20px 0 200px rgb(217, 255, 0),
+        /* inner left magenta broad */
+        inset -20px 0 200px #0ff,
+        /* inner right cyan broad */
+        0 0 30px #fff,
+        /* outer white */
+        -10px 0 60px rgb(255, 238, 0),
+        /* outer left magenta */
+        10px 0 60px #0ff;
+      /* outer right cyan */
+    }
+
+    .btn-text {
+      margin-top: 10px;
     }
 
     .about-text {
-      margin-left: auto;
-      margin-right: auto;
-      width: 80%;
       text-align: left;
-    }
-
-    .about-photos {
-      max-width: 70%;
-      min-width: 300px;
-    }
-
-    .about-img {
-      width: 300px;
-      margin-bottom: 15px;
+      width: 70%;
+      margin: 0 auto;
     }
 
     .footer {
@@ -126,15 +155,12 @@
   <br>
   <div class="gallery-container">
     <div class="about about-photos">
-
-
-      <img class="about-img" src="images/ruptura.jpeg" alt="ruptura">
-
-      <h3 class="gallery-text">Ruptura
-      </h3>
       <div class="btn-container">
-        <button class="gallery-btn prev btn btn-dark"><i class="fa-solid fa-arrow-left"></i></button>
-        <button class="gallery-btn next btn btn-dark"><i class="fa-solid fa-arrow-right"></i></button>
+        <div class="menu-btn">
+          <a href="https://chrisratsabout.github.io/ruptura"><img class="btn-pic" src="images/ruptura.jpeg"
+              alt="ruptura"></a>
+          <p>YouTube</p>
+        </div>
       </div>
       <br>
       <br>
@@ -172,63 +198,69 @@
 
 
   <script>
-    const aboutImg = document.querySelector('.about-img');
-    const galleryText = document.querySelector('.gallery-text');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
+    const buttonPics = [
+      {
+        id: 1,
+        image: "images/ruptura.jpeg",
+        alt: "Ruptura",
+        link: "https://chrisratsabout.github.io/ruptura"
+      },
 
-    const galleryImages = [
       {
-        image: 'images/ruptura.jpeg',
-        text: 'Ruptura'
-      },
-      {
-        image: 'images/undefined.jpeg',
-        text: 'Undefined'
-      },
-      {
-        image: 'images/moratorium.jpeg',
-        text: 'Moratorium'
-      },
-      {
-        image: 'images/concordia.jpeg',
-        text: 'Concordia'
-      },
-      {
-        image: 'images/suertes.jpeg',
-        text: "Las Suertes"
+        id: 2,
+        image: "images/undefined.jpeg",
+        alt: "Undefined",
+        link: "https://chrisratsabout.github.io/undefined"
 
       },
+
       {
-        image: 'images/legacy.jpeg',
-        text: 'Legacy'
+        id: 3,
+        image: "images/moratorium.jpeg",
+        alt: "Moratorium",
+        link: "https://chrisratsabout.github.io/moratorium"
+      },
+
+      {
+        id: 4,
+        image: "images/concordia.jpeg",
+        alt: "Concordia",
+        link: "https://chrisratsabout.github.io/concordia"
+      },
+
+      {
+        id: 5,
+        image: "images/suertes.jpeg",
+        alt: "Las Suertes",
+        link: "https://chrisratsabout.github.io/suertes"
+      },
+
+      {
+        id: 6,
+        image: "images/legacy.jpeg",
+        alt: "Legacy",
+        link: "https://chrisratsabout.github.io/legacy"
       }
-    ];
 
-    let currentItem = 0;
+    ]
 
-    function displayImage() {
-      let item = galleryImages[currentItem];
+    let btnContainer = document.querySelector(".btn-container");
 
-      aboutImg.src = item.image;
-      galleryText.innerHTML = item.text;
+    window.addEventListener("DOMContentLoaded", function () {
+      loadBtns(buttonPics);
+    })
+
+    function loadBtns(arr) {
+      let buttonMap = arr.map(function (item) {
+        return `<div class="menu-btn">
+          <a href="${item.link}"><img class="btn-pic" src="${item.image}" alt="${item.alt}"></a>
+            <p class="btn-text">${item.alt}</p>
+        </div>`
+      })
+
+      buttonMap = buttonMap.join("");
+      btnContainer.innerHTML = buttonMap;
     }
-
-    prevBtn.addEventListener('click', function () {
-      currentItem--;
-      if (currentItem < 0) {
-        currentItem = galleryImages.length - 1;
-      }
-      displayImage()
-    })
-
-    nextBtn.addEventListener('click', function () {
-      currentItem++;
-      if (currentItem > galleryImages.length - 1) {
-        currentItem = 0;
-      }
-      displayImage()
-    })
 
     const year = document.querySelector('.year');
     const currentYear = new Date().getFullYear();
